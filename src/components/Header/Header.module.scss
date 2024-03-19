@@ -1,0 +1,30 @@
+header {
+  background-color: #eee;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 40px;
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navItem {
+    margin: 12px;
+  }
+
+  .navLink {
+    font-size: 1.2rem;
+    margin: 0 1rem;
+    text-decoration: none;
+    padding: 8px 16px 4px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 6px 6px 0 0;
+    border-bottom: 3px transparent solid;
+    color: violet;
+    font-weight: 900;
+  }
+
+  .navLink:hover {
+    border-bottom: 3px violet solid;
+  }
+}

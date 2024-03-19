@@ -3,7 +3,11 @@ import React from "react";
 type Props = {};
 
 const Shop = (props: Props) => {
-  return <div>Shop</div>;
+  return (
+    <div>
+      <a href="nav-link">Hello test</a>
+    </div>
+  );
 };
 
 export default Shop;
