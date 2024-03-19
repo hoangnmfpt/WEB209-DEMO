@@ -6,6 +6,11 @@ export const getProducts = async (): Promise<TProduct[]> => {
   return data;
 };
 
+export const getProduct = async (id: string) => {
+  const { data } = await instance.get(`/products/${id}`);
+  return data;
+};
+
 // Hàm thêm sản phẩm mới vào server
 export const addProduct = async (product: TProduct): Promise<TProduct> => {
   const { data } = await instance.post("/products", product);

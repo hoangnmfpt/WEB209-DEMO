@@ -1,11 +1,20 @@
-import React from "react";
+import { getProducts } from "@/apis/product.service";
+import ProductList from "@/components/ProductList";
+import TProduct from "@/interfaces/TProduct";
+import { useEffect, useState } from "react";
 
-type Props = {};
-
-const Shop = (props: Props) => {
+const Shop = () => {
+  const [products, setProducts] = useState<TProduct[]>([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productsData = await getProducts();
+      setProducts(productsData);
+    };
+    fetchProducts();
+  }, []);
   return (
     <div>
-      <a href="nav-link">Hello test</a>
+      <ProductList products={products} />
     </div>
   );
 };
