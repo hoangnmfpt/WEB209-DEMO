@@ -1,4 +1,4 @@
-import TProduct from "@/interfaces/TProduct";
+import { TProduct } from "@/interfaces/TProduct";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,10 +13,10 @@ const ProductList: React.FC<Props> = ({ products }) => {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
+            <img src={product.thumbnail} alt={product.title} />
             <Link to={`/shop/${product.id}`}>
-              <h2>{product.name}</h2>
+              <h2>{product.title}</h2>
             </Link>
-
             <p>Gia: {product.price}</p>
           </li>
         ))}

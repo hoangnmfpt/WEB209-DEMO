@@ -1,8 +1,13 @@
-// Product.ts
-interface TProduct {
-  id: number;
-  name: string;
+export type TProduct = {
+  id?: number;
+  title: string;
+  description: string;
   price: number;
-}
-
-export default TProduct;
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
+  brand?: string;
+  category?: string;
+  thumbnail?: string;
+  images?: string[];
+};

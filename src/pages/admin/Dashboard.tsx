@@ -1,8 +1,8 @@
 // App.tsx
-import { addProduct, getProducts } from "@/apis/product.service";
+import { addProduct, deleteProduct, getProducts } from "@/apis/product.service";
 import ProductForm from "@/components/ProductForm";
-import ProductList from "@/components/ProductList";
-import TProduct from "@/interfaces/TProduct";
+import ProductTable from "@/components/ProductTable";
+import { TProduct } from "@/interfaces/TProduct";
 import React, { useState, useEffect } from "react";
 const DashBoard: React.FC = () => {
   const [products, setProducts] = useState<TProduct[]>([]);
@@ -21,10 +21,24 @@ const DashBoard: React.FC = () => {
     setProducts([...products, newProduct]);
   };
 
+  const handleDeleteProduct = async (id: number) => {
+    const confirmValue = window.confirm("Are you sure?");
+    if (!confirmValue) return;
+    await deleteProduct(id);
+    setProducts(products.filter((product) => product.id !== id));
+  };
+
   return (
-    <div>
-      <ProductList products={products} />
-      <ProductForm onAddProduct={handleAddProduct} />
+    <div className="container">
+      <h2>Product management</h2>
+      <div className="row">
+        <div className="col">
+          <ProductTable products={products} onDelete={handleDeleteProduct} />
+        </div>
+        <div className="col">
+          <ProductForm />
+        </div>
+      </div>
     </div>
   );
 };
