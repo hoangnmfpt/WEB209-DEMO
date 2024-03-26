@@ -1,20 +1,26 @@
-import { getProducts } from "@/apis/product.service";
-import ProductList from "@/components/ProductList";
-import TProduct from "@/interfaces/TProduct";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { TProduct } from "~/interfaces/TProduct";
 
-const Shop = () => {
-  const [products, setProducts] = useState<TProduct[]>([]);
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsData = await getProducts();
-      setProducts(productsData);
-    };
-    fetchProducts();
-  }, []);
+type Props = {
+  products: TProduct[];
+};
+const Shop = (props: Props) => {
   return (
     <div>
-      <ProductList products={products} />
+      <h2>Product List</h2>
+      <ul>
+        {props.products.map((product) => (
+          <li key={product.id}>
+            <Link to={`/shop/${product.id}`}>
+              <img src={product.thumbnail} alt={product.title} />
+            </Link>
+            <Link to={`/shop/${product.id}`}>
+              <h2>{product.title}</h2>
+            </Link>
+            <p>Gia: {product.price}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

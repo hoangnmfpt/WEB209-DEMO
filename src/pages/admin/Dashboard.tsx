@@ -1,46 +1,55 @@
-// App.tsx
-import { addProduct, deleteProduct, getProducts } from "@/apis/product.service";
-import ProductForm from "@/components/ProductForm";
-import ProductTable from "@/components/ProductTable";
-import { TProduct } from "@/interfaces/TProduct";
-import React, { useState, useEffect } from "react";
-const DashBoard: React.FC = () => {
-  const [products, setProducts] = useState<TProduct[]>([]);
+import React from "react";
+import { Link } from "react-router-dom";
+import { TProduct } from "~/interfaces/TProduct";
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsData = await getProducts();
-      setProducts(productsData);
-    };
+interface Props {
+  products: TProduct[];
+  onDelete: (id: number) => void;
+}
 
-    fetchProducts();
-  }, []);
-
-  const handleAddProduct = async (product: TProduct) => {
-    const newProduct = await addProduct(product);
-    setProducts([...products, newProduct]);
-  };
-
-  const handleDeleteProduct = async (id: number) => {
-    const confirmValue = window.confirm("Are you sure?");
-    if (!confirmValue) return;
-    await deleteProduct(id);
-    setProducts(products.filter((product) => product.id !== id));
-  };
-
+const Dashboard: React.FC<Props> = ({ products, onDelete }) => {
   return (
-    <div className="container">
-      <h2>Product management</h2>
-      <div className="row">
-        <div className="col">
-          <ProductTable products={products} onDelete={handleDeleteProduct} />
-        </div>
-        <div className="col">
-          <ProductForm />
-        </div>
-      </div>
+    <div>
+      <Link className="btn btn-primary" to={`/admin/add`}>
+        Thêm sản phẩm
+      </Link>
+      <table className="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td>{product.id}</td>
+              <td>
+                <Link to={`/shop/${product.id}`}>
+                  <h2>{product.title}</h2>
+                </Link>
+              </td>
+              <td>{product.price}</td>
+              <td>{product.description}</td>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => onDelete(product.id as number)}
+                >
+                  Delete
+                </button>{" "}
+                <Link to={`/admin/edit/${product.id}`}>
+                  <button className="btn btn-warning">Edit</button>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default DashBoard;
+export default Dashboard;
